@@ -1,69 +1,30 @@
 import Image from "next/image";
-
+import { BrandCover } from "@/components/brand";
+import { ArrowDown, Sprout, MoveUpRight, Scan, Heart, MapPin, Flower2 } from "lucide-react";
+import { site } from "@/config/site";
+import { socials } from "@/data/socials";
+import { ClassCards } from "@/components/class-cards";
+import { SocialSection, Testimonials } from "@/components/social-section";
+import { Eyebrow, TextLink, TrialButton, TrialSection } from "@/components/ui";
+import { pageMetadata } from "@/lib/metadata";
+export const metadata = pageMetadata("Pilates in Kathmandu — Move Better, Feel Stronger", site.description, "/");
+const benefits = [
+  { icon: Sprout, title: "Strength, from within", text: "Build a foundation of strength through intentional, controlled movement." },
+  { icon: MoveUpRight, title: "More room to move", text: "Explore mobility and flexibility with a practice that meets you where you are." },
+  { icon: Scan, title: "A deeper connection", text: "Tune into your breath, your posture, and the way your body moves." },
+  { icon: Heart, title: "Confidence in motion", text: "Bring a little more ease and self-belief to the things you do every day." },
+];
 export default function Home() {
-  return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
-  );
+  const structured = { "@context": "https://schema.org", "@type": "ExerciseGym", name: site.name, description: site.description, url: site.url, logo: new URL(site.brand.logo, site.url).toString(), image: new URL(site.brand.cover, site.url).toString(), address: { "@type": "PostalAddress", addressLocality: "Kathmandu", addressCountry: "NP" }, sameAs: socials.filter(s => s.url).map(s => s.url) };
+  return <>{process.env.NEXT_PUBLIC_SITE_URL && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structured).replace(/</g, "\\u003c") }} />}
+    <section className="hero container"><div className="hero-copy"><Eyebrow><span className="small-line" /> MINDFUL MOVEMENT. EVERYDAY STRENGTH.</Eyebrow><h1>Move better.<br />Feel <em>stronger.</em></h1><p>A little movement. A deeper connection.<br className="desktop-break" /> Discover Pilates that helps you feel more at home in your body.</p><div className="hero-actions"><TrialButton source="hero" /><TextLink href="/classes">Explore Classes</TextLink></div><div className="hero-location"><MapPin size={15} strokeWidth={1.5} aria-hidden="true" />Rooted in Kathmandu, Nepal<span />Made for every beginning</div></div><div className="hero-art"><Image src={site.hero.image} alt={site.hero.alt} fill sizes="(max-width: 760px) 92vw, 48vw" preload /><div className="hero-art-label"><span className="little-star">✳</span><span>Find your balance.<br /><em>Make it your own.</em></span></div><div className="hero-stamp">BREATHE<span>✳</span>MOVE · CONNECT</div></div><a className="scroll-hint" href="#our-approach"><ArrowDown size={14} aria-hidden="true" /> A little more about us</a></section>
+    <div className="values-strip"><span>Move with intention</span><span aria-hidden="true">✳</span><span>Find your balance</span><span aria-hidden="true">✳</span><span>Feel like yourself</span><span aria-hidden="true">✳</span><span>One breath at a time</span></div>
+    <section id="our-approach" className="section intro-section container"><Eyebrow>WELCOME TO SUSHI PILATES</Eyebrow><h2>Not just a workout.<br />A little more <em>you.</em></h2><p>We believe movement should feel like coming back to yourself. Sushi Pilates is a new Pilates brand in Kathmandu, bringing a thoughtful, approachable practice to your everyday life.</p><p>Through breath, control, and connection, we explore strength, mobility, and body awareness. No pressure to be perfect. Just space to begin, grow, and feel good in your own way.</p><TextLink href="/about">Get to know us</TextLink><Flower2 className="intro-flower" size={140} strokeWidth={0.65} aria-hidden="true" /></section>
+    <BrandCover />
+    <section className="benefits-section section"><div className="container"><div className="section-heading"><div><Eyebrow>SMALL MOVEMENTS. MEANINGFUL CHANGE.</Eyebrow><h2>Good for your body.<br /><em>Good for your everyday.</em></h2></div><p>A practice that goes beyond the mat,<br />at your pace, in your own way.</p></div><div className="benefits-grid">{benefits.map(({ icon: Icon, title, text }) => <article key={title}><div className="benefit-icon"><Icon size={26} strokeWidth={1.3} aria-hidden="true" /></div><h3>{title}</h3><p>{text}</p></article>)}</div></div></section>
+    <section className="section instructor-section container"><div className="instructor-image"><Image src={site.instructor.image} alt={site.instructor.imageAlt} fill sizes="(max-width: 760px) 90vw, 42vw" /><span className="image-caption">A space for Shila’s portrait · coming soon</span></div><div className="instructor-copy"><Eyebrow>THE HEART BEHIND SUSHI PILATES</Eyebrow><h2>Hi, I’m <em>Shila.</em></h2><p>{site.instructor.introduction}</p><p>{site.instructor.philosophy}</p><div className="signature">Shila Nepali</div><span className="signature-label">FOUNDER, SUSHI PILATES</span><TextLink href="/about">Meet your instructor</TextLink></div></section>
+    <section className="section classes-section"><div className="container"><div className="section-heading"><div><Eyebrow>FIND YOUR KIND OF MOVEMENT</Eyebrow><h2>A practice for <em>you.</em></h2></div><TextLink href="/classes">View all classes</TextLink></div><ClassCards /><p className="section-footnote">Something good is taking shape. Class schedules and details will be confirmed before you book.</p></div></section>
+    <section className="beginner-section container"><div className="beginner-symbol" aria-hidden="true">✳</div><div><Eyebrow>EVERY BEGINNING IS WELCOME</Eyebrow><h2>New to Pilates?<br /><em>You’re in the right place.</em></h2><p>No experience. No expectations. Just you, a little curiosity, and a first step toward a practice that feels your own.</p><TrialButton label="Let’s take that first step" source="beginner" /></div><div className="beginner-notes"><span>Come as you are</span><span>Start with the basics</span><span>Find your own rhythm</span></div></section>
+    <SocialSection /><Testimonials /><TrialSection />
+  </>;
 }
